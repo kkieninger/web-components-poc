@@ -7,7 +7,6 @@ import "./web-components/reactive-component";
 
 function App() {
   const [title, setTitle] = useState('Initial Title');
-
   const [appName, setAppName] = useState('Kevin');
 
   useEffect(() => {

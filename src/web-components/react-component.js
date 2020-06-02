@@ -14,13 +14,16 @@ class TestReactComponent extends HTMLElement {
   createElement(title) {
     return React.createElement(
       NestedComponent,
-      { title },
-      React.createElement("slot")
+      { title }
     );
   }
 
   connectedCallback() {
-    // gives this component access to the virtual / shadow DOM
+    /**
+     * Gives this component access to the virtual / shadow DOM, which is a requirement
+     * of React. You will likely not need this method if you are not using something that
+     * leverages the virtual DOM.
+     */
     this.attachShadow({ mode: "open" }).appendChild(this.mountPoint);
 
     const title = this.getAttribute("title");
