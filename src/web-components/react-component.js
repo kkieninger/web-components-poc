@@ -1,22 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import NestedComponent from "../components/NestedComponent";
 
-// @TODO - find a reasonable way to make this reactive
 class TestReactComponent extends HTMLElement {
-  connectedCallback() {
-    const mountPoint = document.createElement("span");
-    // gives this component access to the virtual / shadow DOM
-    this.attachShadow({ mode: "open" }).appendChild(mountPoint);
+  static get observedAttributes() {
+    return ["title"];
+  }
 
-    // one possible way we can pass down data into a web-component
-    const name = this.getAttribute("name");
-    ReactDOM.render(
-      <div>
-        <h1>I'm a React Web Component</h1>
-        <p>I have data being passed in: {name}</p>
-      </div>,
-      mountPoint
+  mountPoint = document.createElement('span');
+  title;
+
+  createElement(title) {
+    return React.createElement(
+      NestedComponent,
+      { title },
+      React.createElement("slot")
     );
+  }
+
+  connectedCallback() {
+    // this.mountPoint = document.createElement('span');
+    // gives this component access to the virtual / shadow DOM
+    this.attachShadow({ mode: "open" }).appendChild(this.mountPoint);
+
+    const title = this.getAttribute("title");
+    ReactDOM.render(this.createElement(title), this.mountPoint);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "title" && oldValue !== newValue) {
+      ReactDOM.render(this.createElement(newValue), this.mountPoint);
+    }
   }
 }
 

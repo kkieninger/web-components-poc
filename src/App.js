@@ -6,16 +6,14 @@ import "./web-components/react-component";
 import "./web-components/reactive-component";
 
 function App() {
-  const [state, setState] = useState(
-    "This was passed down from the parent app"
-  );
+  const [title, setTitle] = useState('Initial Title');
 
   const [appName, setAppName] = useState('Kevin');
 
   useEffect(() => {
     // add a settimeout to mock API call / props changing
     setTimeout(() => {
-      setState("This was updated and then passed down from the parent app");
+      setTitle("New Title");
       setAppName(appName === "Kevin" ? "Updated Kevin" : "Kevin");
     }, 2000);
   });
@@ -25,7 +23,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <test-component></test-component>
-        <react-test-component name={state}></react-test-component>
+        <react-test-component title={title}></react-test-component>
         <reactive-test-component name={appName}></reactive-test-component>
       </header>
     </div>
