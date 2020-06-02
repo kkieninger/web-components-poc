@@ -7,6 +7,7 @@ class TestReactComponent extends HTMLElement {
     return ["title"];
   }
 
+  // element for the React app to mount to
   mountPoint = document.createElement('span');
   title;
 
@@ -19,7 +20,6 @@ class TestReactComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    // this.mountPoint = document.createElement('span');
     // gives this component access to the virtual / shadow DOM
     this.attachShadow({ mode: "open" }).appendChild(this.mountPoint);
 
@@ -28,6 +28,11 @@ class TestReactComponent extends HTMLElement {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
+    /**
+     * check that the title property has updated and if its
+     * old value is different from its updated value as to not
+     * accidentally re-render
+     */
     if (name === "title" && oldValue !== newValue) {
       ReactDOM.render(this.createElement(newValue), this.mountPoint);
     }
