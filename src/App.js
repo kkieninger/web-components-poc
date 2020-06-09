@@ -4,6 +4,7 @@ import './App.css';
 import "./web-components/test-component";
 import "./web-components/react-component";
 import "./web-components/reactive-component";
+import "./web-components/react-error-component";
 
 function App() {
   const [title, setTitle] = useState('Initial Title');
@@ -24,6 +25,7 @@ function App() {
         <test-component></test-component>
         <react-test-component title={title}></react-test-component>
         <reactive-test-component name={appName}></reactive-test-component>
+        <react-error-component title="This throws an error"></react-error-component>
       </header>
     </div>
   );
